@@ -1,0 +1,201 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const products = [
+	{
+		id: 1,
+		name: "Farine de Blé T65",
+		description: "Notre farine tradition, idéale pour le pain quotidien",
+		image: "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?q=80&w=1000",
+		weight: "1kg",
+		price: "3.50",
+		category: "Farines Tradition",
+		certifications: ["Bio", "Local"],
+		details: {
+			usage: "Pain traditionnel, baguettes",
+			protein: "11-12%",
+			origin: "Blé local"
+		}
+	},
+	{
+		id: 2,
+		name: "Farine de Blé T80",
+		description: "Farine semi-complète pour un pain plus rustique",
+		image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=1000",
+		weight: "1kg",
+		price: "3.80",
+		category: "Farines Tradition",
+		certifications: ["Bio", "Local"],
+		details: {
+			usage: "Pain de campagne, pain complet",
+			protein: "12-13%",
+			origin: "Blé local"
+		}
+	},
+	{
+		id: 3,
+		name: "Farine de Seigle",
+		description: "Farine de seigle pour des pains spéciaux",
+		image: "https://images.unsplash.com/photo-1504400739660-22ebeb14f00a?q=80&w=1000",
+		weight: "1kg",
+		price: "4.20",
+		category: "Farines Spéciales",
+		certifications: ["Bio", "Local"],
+		details: {
+			usage: "Pain de seigle, pain noir",
+			protein: "9-10%",
+			origin: "Seigle local"
+		}
+	}
+];
+---
+
+<Layout title="Nos Produits">
+	<div class="bg-cream py-12">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<h1 class="text-center">Nos Farines</h1>
+			<p class="text-center text-xl mb-12">Découvrez notre gamme de farines artisanales, biologiques et locales</p>
+			
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				{products.map(product => (
+					<div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+						<img 
+							src={product.image} 
+							alt={product.name}
+							class="w-full h-48 object-cover"
+						/>
+						<div class="p-6">
+							<div class="flex justify-between items-start mb-4">
+								<h3 class="font-display text-xl">{product.name}</h3>
+								<div class="flex gap-2">
+									{product.certifications.map(cert => (
+										<span class="bg-cream px-2 py-1 rounded-full text-xs text-green-700">
+											{cert}
+										</span>
+									))}
+								</div>
+							</div>
+							<p class="text-brown-700 mb-4">{product.description}</p>
+							<div class="flex justify-between items-center">
+								<span class="text-lg font-semibold text-brown-900">{product.price}€</span>
+								<button
+									class="bg-green-700 text-white px-4 py-2 rounded-full text-sm hover:bg-green-800 transition-colors"
+									onclick={`showProductDetails(${product.id})`}
+								>
+									Voir détails
+								</button>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal de détails du produit -->
+	<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+		<div class="bg-white rounded-xl p-8 max-w-2xl w-full mx-4">
+			<div id="modalContent"></div>
+			<button
+				onclick="closeModal()"
+				class="mt-6 w-full bg-brown-800 text-white px-4 py-2 rounded-full hover:bg-brown-900 transition-colors"
+			>
+				Fermer
+			</button>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	const products = [
+		{
+			id: 1,
+			name: "Farine de Blé T65",
+			description: "Notre farine tradition, idéale pour le pain quotidien",
+			image: "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?q=80&w=1000",
+			weight: "1kg",
+			price: "3.50",
+			category: "Farines Tradition",
+			certifications: ["Bio", "Local"],
+			details: {
+				usage: "Pain traditionnel, baguettes",
+				protein: "11-12%",
+				origin: "Blé local"
+			}
+		},
+		{
+			id: 2,
+			name: "Farine de Blé T80",
+			description: "Farine semi-complète pour un pain plus rustique",
+			image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=1000",
+			weight: "1kg",
+			price: "3.80",
+			category: "Farines Tradition",
+			certifications: ["Bio", "Local"],
+			details: {
+				usage: "Pain de campagne, pain complet",
+				protein: "12-13%",
+				origin: "Blé local"
+			}
+		},
+		{
+			id: 3,
+			name: "Farine de Seigle",
+			description: "Farine de seigle pour des pains spéciaux",
+			image: "https://images.unsplash.com/photo-1504400739660-22ebeb14f00a?q=80&w=1000",
+			weight: "1kg",
+			price: "4.20",
+			category: "Farines Spéciales",
+			certifications: ["Bio", "Local"],
+			details: {
+				usage: "Pain de seigle, pain noir",
+				protein: "9-10%",
+				origin: "Seigle local"
+			}
+		}
+	];
+
+	window.showProductDetails = (productId) => {
+		const product = products.find(p => p.id === productId);
+		if (!product) return;
+
+		const modalContent = document.getElementById('modalContent');
+		modalContent.innerHTML = `
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<img 
+					src="${product.image}" 
+					alt="${product.name}"
+					class="w-full h-64 object-cover rounded-lg"
+				/>
+				<div>
+					<h3 class="font-display text-2xl mb-4">${product.name}</h3>
+					<p class="text-brown-700 mb-4">${product.description}</p>
+					<div class="space-y-2">
+						<p><strong>Usage :</strong> ${product.details.usage}</p>
+						<p><strong>Taux de protéines :</strong> ${product.details.protein}</p>
+						<p><strong>Origine :</strong> ${product.details.origin}</p>
+					</div>
+					<div class="mt-6">
+						<span class="text-2xl font-semibold text-brown-900">${product.price}€</span>
+						<span class="text-sm text-brown-700">/ ${product.weight}</span>
+					</div>
+				</div>
+			</div>
+		`;
+
+		const modal = document.getElementById('productModal');
+		modal.style.display = 'flex';
+	};
+
+	window.closeModal = () => {
+		const modal = document.getElementById('productModal');
+		modal.style.display = 'none';
+	};
+
+	// Fermer le modal en cliquant en dehors
+	document.getElementById('productModal').addEventListener('click', (e) => {
+		if (e.target.id === 'productModal') {
+			closeModal();
+		}
+	});
+</script>

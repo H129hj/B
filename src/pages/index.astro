@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Accueil">
+	<div class="bg-cream">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="py-20 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+				<div>
+					<h1 class="!mb-6">L'excellence de la meunerie artisanale</h1>
+					<p class="text-xl mb-8">Des farines d'exception, issues de blés locaux et biologiques, pour des produits authentiques et savoureux.</p>
+					<a href="/produits" class="inline-block bg-green-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-800 transition-colors">
+						Découvrir nos farines
+					</a>
+				</div>
+				<div class="relative">
+					<img 
+						src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1000" 
+						alt="Grains de blé" 
+						class="rounded-2xl shadow-xl"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="py-24">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<h2 class="text-center mb-16">Nos Engagements</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+				<div class="text-center">
+					<div class="bg-cream rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+						<svg class="w-10 h-10 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+						</svg>
+					</div>
+					<h3 class="font-display text-2xl mb-4">Qualité Premium</h3>
+					<p>Nos farines sont produites à partir des meilleurs blés, sélectionnés avec soin pour leur qualité exceptionnelle.</p>
+				</div>
+				<div class="text-center">
+					<div class="bg-cream rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+						<svg class="w-10 h-10 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"></path>
+						</svg>
+					</div>
+					<h3 class="font-display text-2xl mb-4">100% Local</h3>
+					<p>Nous travaillons exclusivement avec des agriculteurs locaux pour soutenir l'économie de notre région.</p>
+				</div>
+				<div class="text-center">
+					<div class="bg-cream rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+						<svg class="w-10 h-10 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
+						</svg>
+					</div>
+					<h3 class="font-display text-2xl mb-4">Certifié Bio</h3>
+					<p>Toutes nos farines sont certifiées biologiques, garantissant des produits sains et respectueux de l'environnement.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-cream py-24">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+				<div>
+					<img 
+						src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1000" 
+						alt="Notre moulin" 
+						class="rounded-2xl shadow-xl"
+					/>
+				</div>
+				<div>
+					<h2 class="!mb-6">Notre Savoir-Faire</h2>
+					<p class="text-lg mb-6">
+						Depuis 1850, notre moulin perpétue la tradition de la meunerie artisanale. Nous sélectionnons les meilleurs blés locaux et biologiques pour produire des farines d'exception.
+					</p>
+					<a href="/entreprise" class="text-green-700 font-semibold hover:text-green-800 transition-colors">
+						Découvrir notre histoire →
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Paiement">
+  <div class="bg-cream py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-center">Finaliser votre commande</h1>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+        <div class="space-y-8">
+          <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="font-display text-2xl mb-6">Informations de livraison</h2>
+            <form id="shippingForm" class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="firstName" class="block text-sm font-medium text-brown-700">Prénom</label>
+                  <input type="text" id="firstName" required class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+                </div>
+                <div>
+                  <label for="lastName" class="block text-sm font-medium text-brown-700">Nom</label>
+                  <input type="text" id="lastName" required class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+                </div>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-brown-700">Email</label>
+                <input type="email" id="email" required class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+              </div>
+              <div>
+                <label for="address" class="block text-sm font-medium text-brown-700">Adresse</label>
+                <input type="text" id="address" required class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="postalCode" class="block text-sm font-medium text-brown-700">Code postal</label>
+                  <input type="text" id="postalCode" required class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+                </div>
+                <div>
+                  <label for="city" class="block text-sm font-medium text-brown-700">Ville</label>
+                  <input type="text" id="city" required class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="font-display text-2xl mb-6">Paiement</h2>
+            <form id="paymentForm" class="space-y-4">
+              <div>
+                <label for="cardNumber" class="block text-sm font-medium text-brown-700">Numéro de carte</label>
+                <input type="text" id="cardNumber" required placeholder="1234 5678 9012 3456" class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="expiry" class="block text-sm font-medium text-brown-700">Date d'expiration</label>
+                  <input type="text" id="expiry" required placeholder="MM/AA" class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+                </div>
+                <div>
+                  <label for="cvc" class="block text-sm font-medium text-brown-700">CVC</label>
+                  <input type="text" id="cvc" required placeholder="123" class="mt-1 block w-full rounded-md border-brown-300 shadow-sm focus:border-green-500 focus:ring-green-500"/>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="font-display text-2xl mb-6">Récapitulatif de la commande</h2>
+            <div id="orderSummary" class="space-y-4">
+              <!-- Le récapitulatif sera injecté ici -->
+            </div>
+            <div class="border-t border-gray-200 mt-6 pt-6">
+              <div class="flex justify-between mb-2">
+                <span>Sous-total</span>
+                <span id="subtotal">0,00 €</span>
+              </div>
+              <div class="flex justify-between mb-2">
+                <span>Livraison</span>
+                <span id="shipping">0,00 €</span>
+              </div>
+              <div class="flex justify-between font-semibold text-lg">
+                <span>Total</span>
+                <span id="total">0,00 €</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onclick="processPayment()"
+            class="w-full bg-green-700 text-white px-8 py-4 rounded-full hover:bg-green-800 transition-colors font-semibold"
+          >
+            Confirmer et payer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Simuler la récupération du panier
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  
+  function updateOrderSummary() {
+    const orderSummary = document.getElementById('orderSummary');
+    const subtotal = document.getElementById('subtotal');
+    const shipping = document.getElementById('shipping');
+    const total = document.getElementById('total');
+
+    orderSummary.innerHTML = cart.map(item => `
+      <div class="flex justify-between items-center">
+        <div>
+          <h4 class="font-semibold">${item.name}</h4>
+          <p class="text-sm text-brown-700">Quantité: 1</p>
+        </div>
+        <span>${item.price} €</span>
+      </div>
+    `).join('');
+
+    const subtotalValue = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    const shippingValue = subtotalValue >= 50 ? 0 : 5.90;
+    const totalValue = subtotalValue + shippingValue;
+
+    subtotal.textContent = `${subtotalValue.toFixed(2)} €`;
+    shipping.textContent = `${shippingValue.toFixed(2)} €`;
+    total.textContent = `${totalValue.toFixed(2)} €`;
+  }
+
+  window.processPayment = () => {
+    const shippingForm = document.getElementById('shippingForm');
+    const paymentForm = document.getElementById('paymentForm');
+
+    if (!shippingForm.checkValidity() || !paymentForm.checkValidity()) {
+      alert('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+
+    // Simuler le traitement du paiement
+    const button = event.target;
+    const originalText = button.textContent;
+    
+    button.disabled = true;
+    button.textContent = 'Traitement en cours...';
+    
+    setTimeout(() => {
+      alert('Commande confirmée ! Vous allez recevoir un email de confirmation.');
+      localStorage.removeItem('cart');
+      window.location.href = '/confirmation';
+    }, 2000);
+  };
+
+  // Initialiser le récapitulatif
+  updateOrderSummary();
+</script>
