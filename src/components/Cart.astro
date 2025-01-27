@@ -1,0 +1,88 @@
+---
+---
+<div id="cart" class="fixed right-0 top-0 h-full w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50">
+  <div class="p-6 h-full flex flex-col">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="font-display text-2xl">Votre Panier</h2>
+      <button onclick="closeCart()" class="text-brown-700 hover:text-brown-900">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <div id="cartItems" class="flex-grow overflow-auto">
+      <!-- Les articles du panier seront injectés ici -->
+    </div>
+
+    <div class="border-t border-gray-200 pt-4 mt-4">
+      <div class="flex justify-between mb-4">
+        <span class="font-semibold">Total</span>
+        <span id="cartTotal" class="font-semibold">0,00 €</span>
+      </div>
+      <button
+        onclick="checkout()"
+        class="w-full bg-green-700 text-white px-6 py-3 rounded-full hover:bg-green-800 transition-colors"
+      >
+        Passer la commande
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let cart = [];
+
+  window.addToCart = (product) => {
+    cart.push(product);
+    updateCart();
+    openCart();
+  };
+
+  window.removeFromCart = (index) => {
+    cart.splice(index, 1);
+    updateCart();
+  };
+
+  window.updateCart = () => {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    cartItems.innerHTML = cart.map((item, index) => `
+      <div class="flex items-center gap-4 mb-4">
+        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded"/>
+        <div class="flex-grow">
+          <h4 class="font-semibold">${item.name}</h4>
+          <p class="text-sm text-brown-700">${item.price} €</p>
+        </div>
+        <button 
+          onclick="removeFromCart(${index})"
+          class="text-red-600 hover:text-red-800"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+          </svg>
+        </button>
+      </div>
+    `).join('');
+
+    const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    cartTotal.textContent = `${total.toFixed(2)} €`;
+  };
+
+  window.openCart = () => {
+    document.getElementById('cart').classList.remove('translate-x-full');
+  };
+
+  window.closeCart = () => {
+    document.getElementById('cart').classList.add('translate-x-full');
+  };
+
+  window.checkout = () => {
+    if (cart.length === 0) {
+      alert('Votre panier est vide');
+      return;
+    }
+    window.location.href = '/checkout';
+  };
+</script>
