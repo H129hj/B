@@ -1,0 +1,123 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Les Moulins de la Rivière - Farines de qualité, locales et biologiques" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | Les Moulins de la Rivière</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	</head>
+	<body class="font-sans">
+		<div class="bg-cream">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+				<p class="text-sm text-center text-brown-800">Livraison gratuite à partir de 50€ d'achat</p>
+			</div>
+		</div>
+		<header class="bg-white">
+			<nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex justify-between items-center h-24">
+					<div class="flex-1">
+						<a href="/" class="block">
+							<span class="font-display text-3xl text-brown-900">Les Moulins de la Rivière</span>
+						</a>
+					</div>
+					<div class="hidden lg:flex lg:space-x-12">
+						<a href="/" class="nav-link">Accueil</a>
+						<a href="/entreprise" class="nav-link">Notre Histoire</a>
+						<a href="/produits" class="nav-link">Nos Farines</a>
+						<a href="/valeurs" class="nav-link">Nos Engagements</a>
+						<a href="/contact" class="nav-link">Contact</a>
+					</div>
+					<div class="flex items-center">
+						<button 
+							onclick="openCart()"
+							class="flex items-center space-x-2 text-brown-800 hover:text-green-700 transition-colors"
+						>
+							<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+							</svg>
+							<span id="cartCount" class="text-sm font-semibold">0</span>
+						</button>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer class="bg-brown-900 text-cream mt-24">
+			<div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+					<div class="col-span-1 md:col-span-2">
+						<h3 class="font-display text-2xl mb-6">Les Moulins de la Rivière</h3>
+						<p class="text-cream/80 mb-4">
+							Depuis 1850, nous produisons des farines d'exception, issues de blés locaux et biologiques.
+						</p>
+					</div>
+					<div>
+						<h4 class="font-display text-lg mb-4">Contact</h4>
+						<p class="text-cream/80">Email: contact@moulinsdelariviere.fr</p>
+						<p class="text-cream/80">Tél: 01 23 45 67 89</p>
+					</div>
+					<div>
+						<h4 class="font-display text-lg mb-4">Certifications</h4>
+						<div class="flex space-x-4">
+							<span class="bg-cream/10 px-3 py-1 rounded-full text-sm">Bio</span>
+							<span class="bg-cream/10 px-3 py-1 rounded-full text-sm">Local</span>
+							<span class="bg-cream/10 px-3 py-1 rounded-full text-sm">IFS</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<Cart />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--color-cream: #F9F7F3;
+		--color-brown-900: #292524;
+		--color-brown-800: #44403C;
+		--color-brown-700: #57534E;
+		--color-green-700: #15803D;
+	}
+	
+	html {
+		font-family: 'Open Sans', system-ui, sans-serif;
+		background: var(--color-cream);
+	}
+
+	.font-display {
+		font-family: 'Playfair Display', serif;
+	}
+
+	.nav-link {
+		@apply font-sans text-brown-800 hover:text-green-700 text-sm font-semibold transition-colors;
+	}
+
+	h1 {
+		@apply font-display text-5xl md:text-6xl lg:text-7xl text-brown-900 mb-8;
+	}
+
+	h2 {
+		@apply font-display text-3xl md:text-4xl text-brown-900 mb-6;
+	}
+
+	p {
+		@apply text-brown-700 leading-relaxed;
+	}
+</style>
